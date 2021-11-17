@@ -1,0 +1,88 @@
+$dark-blue: #0f172a;
+$light-blue: #387c9c;
+$light-grey: #f6f6f6;
+:root {
+  --dark-blue: #{$dark-blue};
+  --light-blue: #{$light-blue};
+  --border-radius: 3px;
+  --grey: #{$light-grey};
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  font-size: 14px;
+}
+
+.fr-toolbar.fr-top, .fr-second-toolbar {
+  -webkit-border-radius: 0 !important;
+  -moz-border-radius: 0 !important;
+  border-radius: 0 !important;
+}
+
+.rounded {
+  -webkit-border-radius: var(--border-radius);
+  -moz-border-radius: var(--border-radius);
+  border-radius: var(--border-radius);
+}
+
+.bg-grey {
+  background-color: var(--grey);
+}
+
+input-errors {
+  .error-wrapper {
+    left: 0 !important;
+  }
+  display: block;
+  position: relative !important;
+}
+
+.page-title {
+  font-weight: bold;
+  font-size: 22px;
+  margin-bottom: 0;
+}
+
+.spaced-btns {
+  > button {
+    margin-right: 5px;
+  }
+  &:last-child {
+    margin-right: 0;
+  }
+}
+
+.form-floating > .form-control:focus ~ label, .form-floating > .form-control:not(:placeholder-shown) ~ label, .form-floating > .form-select ~ label {
+  color: #1337b4;
+  text-transform: uppercase;
+  font-weight: bold;
+}
+
+p-dialog form {
+  min-width: 80%;
+}
+
+.section {
+  padding: 10px 20px;
+  text-transform: uppercase;
+  font-weight: bold;
+  margin-bottom: 20px;
+  background-color: #000000;
+  color: #ffffff;
+}
+
+.p-highlight {
+  background-color: #f69825 !important;
+  border-color: #f69825 !important;
+}
+
+.p-chips-token {
+  margin-bottom: 5px;
+}
+
+.p-dropdown-panel {
+  z-index: 100000000000 !important;
+}

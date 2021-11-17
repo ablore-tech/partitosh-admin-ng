@@ -1,0 +1,109 @@
+
+.grid-container {
+  display: grid;
+  grid-template-columns: 240px 1fr;
+  grid-template-rows: 0.2fr 45fr 1fr;
+  gap: 0px 0px;
+  grid-template-areas:
+    "sidebar top-bar"
+    "sidebar content"
+    "sidebar content";
+  height: 100vh;
+}
+
+.content {
+  margin-left: 280px;
+}
+
+.sidebar {
+  position: fixed;
+  z-index: 1000;
+  height: 100%;
+  overflow-y: auto;
+  left: 0;
+  width: 280px;
+  grid-area: sidebar;
+  background-color: var(--dark-blue);
+  box-shadow: rgba(0, 0, 0, 0.15) 0px 15px 25px, rgba(0, 0, 0, 0.05) 0px 5px 10px;
+}
+
+.side-menu {
+  padding: 10px;
+  i {
+    margin-right: 16px;
+    font-size: 12px;
+  }
+  li {
+  }
+  a {
+    padding: 0.75rem;
+    display: block;
+    color: #fff;
+    font-size: 0.75rem;
+    text-decoration: none;
+    &:hover {
+      background-color: var(--light-blue);
+    }
+  }
+}
+
+.slider {
+  position: absolute;
+  z-index: 100;
+  width: 100%;
+  height: 5px;
+  overflow-x: hidden;
+}
+
+.line {
+  position: absolute;
+  background: #4a8df8;
+  width: 150%;
+  height: 5px;
+}
+
+.subline {
+  position: absolute;
+  background: #a04ffa;
+  height: 5px;
+}
+
+.inc {
+  animation: increase 1s infinite;
+}
+
+.dec {
+  animation: decrease 2s 0.5s infinite;
+}
+
+@keyframes increase {
+  from {
+    left: -5%;
+    width: 5%;
+  }
+  to {
+    left: 120%;
+    width: 100%;
+  }
+}
+
+@keyframes decrease {
+  from {
+    left: -80%;
+    width: 80%;
+  }
+  to {
+    left: 110%;
+    width: 10%;
+  }
+}
+
+.copy {
+  font-size: 12px;
+  color: #636161;
+  padding: 16px;
+}
+
+.logged-in-user {
+  color: #fff !important;
+}

@@ -1,0 +1,50 @@
+/* To learn more about this file see: https://angular.io/config/tsconfig. */
+{
+  "compileOnSave": false,
+  "compilerOptions": {
+    "baseUrl": "./",
+    "types": [
+      "node"
+    ],
+    "outDir": "./dist/out-tsc",
+    "forceConsistentCasingInFileNames": true,
+    "strict": false,
+    "noImplicitReturns": true,
+    "noFallthroughCasesInSwitch": true,
+    "sourceMap": true,
+    "declaration": false,
+    "downlevelIteration": true,
+    "experimentalDecorators": true,
+    "moduleResolution": "node",
+    "importHelpers": true,
+    "target": "es2017",
+    "module": "es2020",
+    "lib": [
+      "es2018",
+      "dom"
+    ],
+    "paths": {
+      "xs-common-components": [
+        "dist/xs-common-components/xs-common-components",
+        "dist/xs-common-components"
+      ],
+      "media-manager": [
+        "dist/media-manager/media-manager",
+        "dist/media-manager"
+      ],
+      "xs-laravel-data-table": [
+        "dist/xs-laravel-data-table/xs-laravel-data-table",
+        "dist/xs-laravel-data-table"
+      ],
+      "@angular/*": [
+        "./node_modules/@angular/*"
+      ]
+    }
+  },
+  "angularCompilerOptions": {
+    "enableI18nLegacyMessageIdFormat": false,
+    "strictInjectionParameters": false,
+    "strictInputAccessModifiers": false,
+    "strictTemplates": false
+  }
+}

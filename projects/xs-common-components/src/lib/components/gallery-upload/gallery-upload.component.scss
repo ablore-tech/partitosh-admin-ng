@@ -1,0 +1,34 @@
+.progress-bar {
+  position: absolute;
+  background-color: #4f4f4f;
+  padding: 2px;
+  font-size: 10px;
+  bottom: 0;
+  z-index: 10;
+  width: 100%;
+  .bar {
+    -webkit-transition: all 0.3s;
+    -moz-transition: all 0.3s;
+    -ms-transition: all 0.3s;
+    -o-transition: all 0.3s;
+    transition: all 0.3s;
+    position: absolute;
+    top: 0;
+    left: 0;
+    background-color: #7bc12c;
+    width: 50%;
+    content: ' ';
+    height: 100%;
+  }
+  span {
+    position: relative;
+    z-index: 1;
+    text-align: center;
+    color: #ffffff;
+    text-transform: uppercase;
+  }
+}
+
+a {
+  cursor: pointer;
+}

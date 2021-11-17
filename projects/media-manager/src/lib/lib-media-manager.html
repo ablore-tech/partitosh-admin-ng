@@ -1,0 +1,48 @@
+<div class="d-flex h-100 flex-column">
+  <div class="header d-flex">
+    <h2 class="fw-bold m-0 p-0 me-3">Media Manager</h2>
+
+
+  </div>
+  <div class="content d-flex">
+    <div class="content-holder position-relative">
+      <div class="position-absolute w-100 h-100 p-4">
+        <ul class="d-flex list-grid flex-wrap list-unstyled">
+          <li *ngFor="let item of items" class="grid-item" [ngClass]="{'bg-primary': (currentItem && currentItem.id==item.id)}">
+            <img (click)="selectItem(item)" src="{{item.url}}" class="img-fluid" alt="">
+            <i *ngIf="selectedItems.indexOf(item.id)> -1" class="fa fa-check-circle text-success"></i>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+    <div class="sidebar">
+      <ng-container *ngIf="currentItem && currentItem.id>0">
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="currentItem.title" (ngModelChange)="updateCurrentItem()" class="form-control" id="title" placeholder="name@example.com">
+          <label for="title">title</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="currentItem.alt_text" (ngModelChange)="updateCurrentItem()" class="form-control" id="alt_text" placeholder="name@example.com">
+          <label for="alt_text">alt_text</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="currentItem.description" (ngModelChange)="updateCurrentItem()" class="form-control" id="description" placeholder="name@example.com">
+          <label for="description">Description</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" [(ngModel)]="currentItem.caption" (ngModelChange)="updateCurrentItem()" class="form-control" id="caption" placeholder="name@example.com">
+          <label for="caption">Caption</label>
+        </div>
+      </ng-container>
+      <div class="alert alert-info" *ngIf="savingMeta">Saving...</div>
+      <p-fileUpload chooseLabel="Upload Files" [auto]="true" (onUpload)="filesUploaded($event)" name="files[]" [url]="uploadUrl" multiple="multiple"></p-fileUpload>
+    </div>
+  </div>
+  <div class="footer">
+    <div class="d-flex justify-content-between">
+      <div></div>
+      <button class="btn btn-primary" (click)="selectionDone()">Finalize Selection</button>
+    </div>
+  </div>
+</div>

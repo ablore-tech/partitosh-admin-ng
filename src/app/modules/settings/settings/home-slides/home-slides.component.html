@@ -1,0 +1,11 @@
+<div class="row">
+  <ng-container *ngFor="let slide of slides;let idx=index;trackBy:userByName">
+    <div class="col-sm-4 mb-4">
+      <div class="border p-4">
+        <app-media-column [(ngModel)]="slides[idx]" (input)="update()"></app-media-column>
+      </div>
+    </div>
+  </ng-container>
+</div>
+<div></div>
+<button class="btn btn-info" (click)="addNew()">Add New Slide</button>

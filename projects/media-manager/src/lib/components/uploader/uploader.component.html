@@ -1,0 +1,7 @@
+<input style="display: none" multiple type="file" #file (change)="onSelectChange($event.target)">
+<div class="d-flex">
+  <button class="btn btn-primary" (click)="file.click()">Upload</button>
+  <div class="progress">
+    <div class="bar"></div>
+  </div>
+</div>

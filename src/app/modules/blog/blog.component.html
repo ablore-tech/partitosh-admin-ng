@@ -1,0 +1,80 @@
+<div class="d-flex justify-content-between align-items-center border-bottom mb-4 pb-3">
+  <h1 class="page-title">Manage blog</h1>
+  <button class="p-button p-button-sm" (click)="displayAddNewModal=true">Add New</button>
+</div>
+
+
+<xs-laravel-data-table [api]="api" #table [endpoint]="endpoint" [config]="config">
+  <ng-template field="status" let-idx="index" lt-cell-template="" let-item="">
+    <app-badge [text]="item.status"></app-badge>
+  </ng-template>
+  <ng-template field="actions" let-idx="index" lt-cell-template="" let-item="">
+    <div class="spaced-btns">
+      <button class="btn-sm btn  btn-primary" (click)="editBlog(item)">Edit</button>
+      <button class="btn-sm btn  btn-danger" mwlConfirmationPopover (confirm)="delete(item)">Delete</button>
+    </div>
+  </ng-template>
+</xs-laravel-data-table>
+
+<p-dialog [modal]="true" [maximizable]="true" styleClass="w-75" header="{{form.value.id?'Update':'Add New'}} Blog"
+          [(visible)]="displayAddNewModal" (onHide)="formDialogClosed()">
+
+  <form *ngIf="displayAddNewModal" [formGroup]="form" class="dialog-form">
+    <div class="row">
+      <div class="col-sm-8">
+        <div class="form-floating mb-3" formFieldContainer>
+          <input type="text" formControlName="title" class="form-control" id="title" placeholder="name@example.com">
+          <label for="title">Title</label>
+        </div>
+        <div class="form-floating mb-3">
+          <input type="text" formControlName="slug" class="form-control" id="slug" placeholder="name@example.com">
+          <label for="slug">Slug</label>
+        </div>
+
+        <div class="mb-3">
+          <app-editor formControlName="content"></app-editor>
+        </div>
+        <div class="form-group mt-3">
+          <label for="" class="form-label">Tags ( comma separated)</label>
+          <p-chips styleClass="w-100" [allowDuplicate]="false" separator="," formControlName="tags"></p-chips>
+        </div>
+        <div class="form-group my-3">
+          <label for="" class="form-label">Post Type</label>
+          <p-selectButton formControlName="type" [options]="postType"></p-selectButton>
+        </div>
+        <div class=" mb-3" *ngIf="['pdf','podcast'].indexOf(form.value.type) >-1">
+          <label for="">Upload File</label>
+          <app-image-upload formControlName="meta_audio_or_pdf"></app-image-upload>
+        </div>
+
+
+        <div class="form-group mt-3">
+          <label for="" class="form-label">Status</label>
+          <p-selectButton formControlName="status" [options]="statusList"></p-selectButton>
+        </div>
+      </div>
+      <div class="col-sm-4">
+        <div class="mb-4">
+          <div class="section">Categories</div>
+          <p-listbox formControlName="categories"
+                     [showToggleAll]="false"
+                     [checkbox]="true" [multiple]="true" optionValue="id" [options]="dependOn.categories"
+                     optionLabel="name">
+          </p-listbox>
+        </div>
+        <div formFieldContainer>
+          <div class="section">Blog Banner Image</div>
+          <app-image-upload formControlName="image"></app-image-upload>
+        </div>
+
+        <div class="section mt-3">Seo</div>
+        <lib-seo-input formControlName="seo"></lib-seo-input>
+      </div>
+    </div>
+
+
+  </form>
+  <p-footer>
+    <app-loading-button (click)="submitForm()" [loading]="loading" [label]="form.value.id ? 'Update Blog' : 'Add Blog'"></app-loading-button>
+  </p-footer>
+</p-dialog>

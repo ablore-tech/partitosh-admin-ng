@@ -1,0 +1,35 @@
+<div class="d-flex justify-content-between align-items-center border-bottom mb-4 pb-3">
+  <h1 class="page-title">Manage award</h1>
+  <button class="p-button p-button-sm" (click)="displayAddNewModal=true">Add New</button>
+</div>
+
+
+<xs-laravel-data-table [api]="api" #table [endpoint]="endpoint" [config]="config">
+  <ng-template field="actions" let-idx="index" lt-cell-template="" let-item="">
+    <div class="spaced-btns">
+      <button class="p-button p-button-sm p-button-primary" (click)="editUser(item)">Edit</button>
+      <button class="p-button p-button-sm p-button-danger" (click)="delete(item)">Delete</button>
+    </div>
+  </ng-template>
+</xs-laravel-data-table>
+
+<p-dialog [modal]="true" styleClass="w-50" header="{{form.value.id?'Update':'Add New'}} award" [(visible)]="displayAddNewModal" (onHide)="formDialogClosed()">
+  <form [formGroup]="form">
+
+    <div class="form-floating mb-3">
+      <input type="text" formControlName="title" class="form-control" id="title" placeholder="name@example.com">
+      <label for="title">title</label>
+    </div>
+    <div class="form-floating mb-3">
+      <input type="text" formControlName="link" class="form-control" id="link" placeholder="name@example.com">
+      <label for="link">link</label>
+    </div>
+
+    <app-image-upload formControlName="image"></app-image-upload>
+
+
+  </form>
+  <p-footer>
+    <button [disabled]="form.invalid" class="p-button p-button-sm" (click)="submitForm()">{{form.value.id ? 'Update' : 'Add'}} award</button>
+  </p-footer>
+</p-dialog>

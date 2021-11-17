@@ -1,0 +1,246 @@
+{
+  "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "version": 1,
+  "newProjectRoot": "projects",
+  "projects": {
+    "book-your-own": {
+      "projectType": "application",
+      "schematics": {
+        "@schematics/angular:component": {
+          "style": "scss",
+          "skipTests": true
+        },
+        "@schematics/angular:application": {
+          "strict": false
+        }
+      },
+      "root": "",
+      "sourceRoot": "src",
+      "prefix": "app",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "options": {
+            "outputPath": "dist/public/admin",
+            "index": "src/index.html",
+            "main": "src/main.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss",
+              "src/bootstrap-5/bootstrap.css",
+              "node_modules/primeicons/primeicons.css",
+              "node_modules/primeng/resources/themes/saga-blue/theme.css",
+              "node_modules/primeng/resources/primeng.min.css",
+              "primeng/resources/themes/bootstrap4-light-blue/theme.css",
+              "node_modules/ngx-toastr/toastr.css",
+              "node_modules/font-awesome/css/font-awesome.min.css",
+              "node_modules/froala-editor/css/froala_editor.pkgd.min.css"
+            ],
+            "scripts": [
+              "node_modules/froala-editor/js/froala_editor.pkgd.min.js"
+            ]
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "10mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "book-your-own:build:production"
+            },
+            "development": {
+              "browserTarget": "book-your-own:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "book-your-own:build"
+          }
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "src/test.ts",
+            "polyfills": "src/polyfills.ts",
+            "tsConfig": "tsconfig.spec.json",
+            "karmaConfig": "karma.conf.js",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "src/favicon.ico",
+              "src/assets"
+            ],
+            "styles": [
+              "src/styles.scss"
+            ],
+            "scripts": []
+          }
+        }
+      }
+    },
+    "xs-laravel-data-table": {
+      "projectType": "library",
+      "root": "projects/xs-laravel-data-table",
+      "sourceRoot": "projects/xs-laravel-data-table/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/xs-laravel-data-table/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/xs-laravel-data-table/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/xs-laravel-data-table/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/xs-laravel-data-table/src/test.ts",
+            "tsConfig": "projects/xs-laravel-data-table/tsconfig.spec.json",
+            "karmaConfig": "projects/xs-laravel-data-table/karma.conf.js"
+          }
+        }
+      }
+    },
+    "xs-commmon-components": {
+      "projectType": "library",
+      "root": "projects/xs-commmon-components",
+      "sourceRoot": "projects/xs-commmon-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/xs-commmon-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/xs-commmon-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/xs-commmon-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/xs-commmon-components/src/test.ts",
+            "tsConfig": "projects/xs-commmon-components/tsconfig.spec.json",
+            "karmaConfig": "projects/xs-commmon-components/karma.conf.js"
+          }
+        }
+      }
+    },
+    "xs-common-components": {
+      "projectType": "library",
+      "root": "projects/xs-common-components",
+      "sourceRoot": "projects/xs-common-components/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/xs-common-components/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/xs-common-components/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/xs-common-components/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/xs-common-components/src/test.ts",
+            "tsConfig": "projects/xs-common-components/tsconfig.spec.json",
+            "karmaConfig": "projects/xs-common-components/karma.conf.js"
+          }
+        }
+      }
+    },
+    "media-manager": {
+      "projectType": "library",
+      "root": "projects/media-manager",
+      "sourceRoot": "projects/media-manager/src",
+      "prefix": "lib",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:ng-packagr",
+          "options": {
+            "project": "projects/media-manager/ng-package.json"
+          },
+          "configurations": {
+            "production": {
+              "tsConfig": "projects/media-manager/tsconfig.lib.prod.json"
+            },
+            "development": {
+              "tsConfig": "projects/media-manager/tsconfig.lib.json"
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "test": {
+          "builder": "@angular-devkit/build-angular:karma",
+          "options": {
+            "main": "projects/media-manager/src/test.ts",
+            "tsConfig": "projects/media-manager/tsconfig.spec.json",
+            "karmaConfig": "projects/media-manager/karma.conf.js"
+          }
+        }
+      }
+    }
+  },
+  "defaultProject": "book-your-own"
+}

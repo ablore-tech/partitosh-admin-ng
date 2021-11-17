@@ -1,0 +1,18 @@
+<div class="p-4" style="background-color: #dcfbfc;">
+  <app-loading-button type="button" label="Select Images" (click)="fileInput.click()">Select Files</app-loading-button>
+  <div class="d-flex flex-wrap gap-1">
+    <ng-container *ngFor="let i of uploadedFiles; trackBy: trackByIndex;let index=index">
+      <div class="my-2" style="width: 18%;">
+        <app-cdn-image *ngIf="i" [src]="i" width="150" height="100"></app-cdn-image>
+        <a (click)="removeImage(index)" class="text-danger cursor-pointer text-decoration-none"><i class="fa fa-times me-2"></i>remove image</a>
+      </div>
+    </ng-container>
+  </div>
+</div>
+<div class="progress-bar position-relative" *ngIf="progress>0">
+  <div class="bar" [ngStyle]="{width: progress+'%'}"></div>
+  <span>Uploading  {{progress}}%</span>
+</div>
+
+<input style="display: none;" value="" type="file" #fileInput (change)="upload($event)" [multiple]="true">
+

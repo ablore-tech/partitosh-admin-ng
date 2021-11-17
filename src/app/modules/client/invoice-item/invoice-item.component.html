@@ -1,0 +1,30 @@
+<div class="row" *ngFor="let it of items;let idx=index">
+  <div class="col-sm-5">
+    <div class="form-floating mb-3">
+      <input type="text" class="form-control" [(ngModel)]="items[idx].name" (ngModelChange)="updated()" id="name" placeholder="name@example.com">
+      <label for="name">name</label>
+    </div>
+  </div>
+  <div class="col-sm-2">
+    <div class="form-floating mb-3">
+      <input type="text" pKeyFilter="num" [(ngModel)]="items[idx].price" (ngModelChange)="updated()" class="form-control" id="price" placeholder="name@example.com">
+      <label for="price">price</label>
+    </div>
+  </div>
+  <div class="col-sm-2">
+    <div class="form-floating mb-3">
+      <input type="text" pKeyFilter="int" [(ngModel)]="items[idx].quantity" (ngModelChange)="updated()" class="form-control" id="quantity" placeholder="name@example.com">
+      <label for="quantity">quantity</label>
+    </div>
+  </div>
+  <div class="col-sm-1 d-flex">
+    <div class="fw-bold">
+      <label for="">Item Total</label>
+      {{items[idx].price * items[idx].quantity|currency:'INR'}}
+    </div>
+  </div>
+  <div class="col-sm-2 d-flex">
+    <button class="btn btn-danger w-100 mb-3" (click)="deleteItem(idx)">Delete</button>
+  </div>
+</div>
+<div class="btn btn-primary" (click)="addEmpty()">Add New</div>

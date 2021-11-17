@@ -1,0 +1,74 @@
+<div class="d-flex justify-content-between align-items-center border-bottom mb-4 pb-3">
+  <h1 class="page-title">Manage invoice</h1>
+  <button class="p-button p-button-sm" (click)="addNew()">Add New</button>
+</div>
+
+
+<xs-laravel-data-table [api]="api" #table [endpoint]="endpoint" [config]="config">
+  <ng-template field="actions" let-idx="index" lt-cell-template="" let-item="">
+    <div class="spaced-btns">
+      <button class="p-button p-button-sm p-button-secondary" (click)="download(item)">Download</button>
+      <button class="p-button p-button-sm p-button-primary" (click)="editUser(item)">Edit</button>
+      <button class="p-button p-button-sm p-button-danger" mwlConfirmationPopover (confirm)="delete(item)">Delete</button>
+    </div>
+  </ng-template>
+</xs-laravel-data-table>
+
+
+<p-dialog header="Add Invoice" [modal]="true" styleClass="w-75" [(visible)]="displayInvoice">
+  <form [formGroup]="invoiceForm" *ngIf="displayInvoice">
+    <div class="row">
+      <div class="col-sm-6" *ngIf="selectedClient">
+        <div class="border p-4 " style="background-color: #e6e6e6;">
+          <h2>{{selectedClient.name}}</h2>
+          <small>{{selectedClient.address}}</small><br>
+          <small>{{selectedClient.state}},{{selectedClient.country}}-{{selectedClient.pincode}}</small>
+        </div>
+      </div>
+      <div class="col-sm-6"></div>
+    </div>
+    <div class="form-group mt-4">
+      <label class="d-block">Due Date</label>
+      <p-calendar appendTo="body" dateFormat="d M yy" formControlName="due_date"></p-calendar>
+    </div>
+    <div class="form-group mt-4">
+      <h4>Items</h4>
+      <app-invoice-item formControlName="items"></app-invoice-item>
+    </div>
+    <div class="form-group mt-4">
+      <h4>Tax</h4>
+      <div class="row">
+        <div class="col-sm-3">
+          <div class="form-floating mb-3">
+            <input type="text" formControlName="tax_name" class="form-control" id="tax_name" placeholder="name@example.com">
+            <label for="tax_name">Tax Name</label>
+          </div>
+        </div>
+        <div class="col-sm-3">
+          <div class="form-floating mb-3">
+            <input type="text" pKeyFilter="num" formControlName="tax_rate" class="form-control" id="percentage" placeholder="name@example.com">
+            <label for="percentage">Percentage</label>
+          </div>
+        </div>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3">
+          <div>Total Tax</div>
+          {{totalTax|currency:'INR'}}
+        </div>
+      </div>
+      <div class="row">
+        <div class="col-sm-9"></div>
+        <div class="col-sm-3">
+        </div>
+      </div>
+    </div>
+
+  </form>
+  <p-footer>
+    <div class="d-flex justify-content-end">
+      <label for="">Total Amount : {{totalAmount + totalTax|currency:'INR'}}</label>
+      <div class="pe-4"></div>
+      <button class="btn btn-success px-4" (click)="saveInvoice()">Save Invoice</button>
+    </div>
+  </p-footer>
+</p-dialog>

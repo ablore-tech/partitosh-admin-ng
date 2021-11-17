@@ -1,0 +1,12 @@
+{
+  "name": "xs-laravel-data-table",
+  "version": "0.41.0",
+  "peerDependencies": {
+    "@angular/common": "^8.2.14",
+    "@angular/core": "^8.2.14",
+    "typy": "^3.3.0",
+    "primeicons": "^4.1.0",
+    "primeng": "^11.2.0"
+  },
+  "dependencies": {}
+}

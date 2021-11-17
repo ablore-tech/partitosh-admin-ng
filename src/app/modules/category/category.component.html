@@ -1,0 +1,29 @@
+<div class="d-flex justify-content-between align-items-center border-bottom mb-4 pb-3">
+  <h1 class="page-title">Manage category</h1>
+  <button class="p-button p-button-sm" (click)="displayAddNewModal=true">Add New</button>
+</div>
+
+
+<xs-laravel-data-table [api]="api" #table [endpoint]="endpoint" [config]="config">
+  <ng-template field="actions" let-idx="index" lt-cell-template="" let-item="">
+    <div class="spaced-btns">
+      <button class="p-button p-button-sm p-button-primary" (click)="editUser(item)">Edit</button>
+      <button class="p-button p-button-sm p-button-danger" (click)="delete(item)">Delete</button>
+    </div>
+  </ng-template>
+</xs-laravel-data-table>
+
+<p-dialog styleClass="w-75" [modal]="true" header="{{form.value.id?'Update':'Add New'}} category" [(visible)]="displayAddNewModal" (onHide)="formDialogClosed()">
+  <form *ngIf="displayAddNewModal" [formGroup]="form" class="dialog-form">
+
+    <div class="form-floating mb-3" formFieldContainer>
+      <input type="text" formControlName="name" class="form-control" id="name" placeholder="name@example.com">
+      <label for="name">Category Name</label>
+    </div>
+
+
+  </form>
+  <p-footer>
+    <app-loading-button [loading]="loading" (click)="submitForm()" [label]="form.value.id ? 'Update Category' : 'Add Category'"></app-loading-button>
+  </p-footer>
+</p-dialog>

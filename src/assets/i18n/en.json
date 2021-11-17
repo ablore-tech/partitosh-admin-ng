@@ -1,0 +1,19 @@
+{
+  "GENERAL": {
+    "ERRORS": {
+      "REQUIRED": "Required",
+      "EMAIL": "Email Required",
+      "PHONE": "Invalid  Phone/mobile number",
+      "SAME": "Passwords don't match",
+      "TIME": "Invalid Time format ( eg 10:00 AM)",
+      "ACCOUNT_DONT_MATCH": "Account number do not match"
+    }
+  },
+  "PASSWORD_RESET": {
+    "ERRORS": {
+      "MINLENGTH": "Minimum password length should be 6"
+    }
+  },
+  "DOWNLOAD_FORM": {
+  }
+}

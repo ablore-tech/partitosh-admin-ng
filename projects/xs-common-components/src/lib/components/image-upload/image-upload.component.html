@@ -1,0 +1,24 @@
+<input style="display: none;" value="" type="file" #fileInput (change)="upload($event)" [multiple]="multiple">
+<div class="d-flex align-items-center">
+  <div class="position-relative">
+    <div class="position-relative image-container" *ngIf="uploadedFiles.length>0">
+
+
+      <app-cdn-image [src]="uploadedFiles[0].path" width="150" height="0"></app-cdn-image>
+      <a class="clear" *ngIf="uploadedFiles.length>0" (click)="clearImage()"><i class="fa fa-times"></i></a>
+
+
+    </div>
+    <div class="placeholder" [ngStyle]="{width:'150px', height:'150px'}" (click)="fileInput.click()" *ngIf="uploadedFiles.length==0">
+      <ng-container *ngIf="uploadedFiles.length===0">
+        <i class="fa fa-plus"></i>
+        <span class="label">{{label}}</span>
+      </ng-container>
+
+    </div>
+    <div class="progress-bar" *ngIf="progress>0">
+      <div class="bar" [ngStyle]="{width: progress+'%'}"></div>
+      <span>Uploading  {{progress}}%</span>
+    </div>
+  </div>
+</div>

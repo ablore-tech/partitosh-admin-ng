@@ -1,0 +1,175 @@
+<div class="text-center mt-5 mb-5" *ngIf="dataLoading && firstLoad">
+  <lib-svg-loader></lib-svg-loader>
+  <small class="font-weight-bold">Loading Data</small>
+</div>
+<ng-container *ngIf="data">
+  <div class="d-flex align-items-center justify-content-between">
+    <div class="quick-links" *ngIf="config.quickLinks">
+      <a (click)="showAll()" class="mr-3" [class]="{active: !params.trashed}">All Records</a>
+      <a (click)="showTrashed()" [class]="{active: params.trashed}">Trashed Records</a>
+    </div>
+
+  </div>
+
+
+  <table class="table table-bordered table-sm table-hover">
+    <tr>
+      <th *ngFor="let header of config.fields"
+          (click)="sort(header.key,header.sortable)"
+          [ngClass]="{'min':header.width=='min', 'w-80':header.focus}">
+        {{header.name}}
+        <ng-container *ngIf="header.sortable!=false">
+          <span *ngIf="!params.sort.key"><i class="ml-2 fa fa-sort"></i></span>
+          <ng-container *ngIf="params.sort.key==header.key">
+            <span><i class="ml-2 fa" [ngClass]="{'fa-sort-up':params.sort.order=='asc','fa-sort-down':params.sort.order=='desc'}"></i></span>
+          </ng-container>
+        </ng-container>
+      </th>
+      <th *ngIf="config.actions">Actions</th>
+      <th *ngIf="cellTemplateRefs['actions']"></th>
+    </tr>
+    <!-- filters -->
+    <tr class="filters">
+      <td *ngFor="let header of config.fields" class="p-0">
+        <ng-container *ngIf="header.filter!==false">
+          <ng-container [ngSwitch]="header.type">
+            <ng-container *ngSwitchCase="'select'">
+              <div class="d-flex align-items-center">
+                <p-dropdown
+                  [options]="header.selectOptions|async"
+                  optionLabel="label"
+                  [autoDisplayFirst]="false"
+                  optionValue="value"
+                  [(ngModel)]="params.search[header.filterKey ? header.filterKey:header.key]"
+                  (onChange)="loadData()"
+                ></p-dropdown>
+
+              </div>
+            </ng-container>
+            <ng-container *ngSwitchCase="'boolean'">
+              <select [(ngModel)]="params.search[header.filterKey]" class="form-control" (change)="ku($event)">
+                <option value="">ANY</option>
+                <option value="1">YES</option>
+                <option value="0">NO</option>
+              </select>
+            </ng-container>
+            <ng-container *ngSwitchCase="'dateIST'">
+              <p-calendar appendTo="body" [(ngModel)]="params.search[header.key]" (onClose)="loadData()" dateFormat="dd/mm/yy" [selectionMode]="'range'" rangeSeparator="-"></p-calendar>
+            </ng-container>
+            <ng-container *ngSwitchCase="'image'"></ng-container>
+            <ng-container *ngSwitchDefault>
+
+              <div class="d-flex align-items-center">
+                <i class="fa fa-search"></i>
+                <input [(ngModel)]="params.search[header.filterKey ? header.filterKey: header.key]" (keyup)="ku($event)" type="text" class="form-control form-control-sm" style="min-width:50px">
+              </div>
+            </ng-container>
+
+          </ng-container>
+        </ng-container>
+      </td>
+      <td *ngIf="cellTemplateRefs['actions']"></td>
+
+    </tr>
+    <!-- values -->
+    <ng-container *ngIf="!loading ">
+      <tbody>
+      <ng-container *ngFor="let item of data.data;let idx=index">
+        <ng-container *ngTemplateOutlet="rowTemplate?.tpl || defaultRowTpl;context:{$implicit: item,index:idx,config:config}"></ng-container>
+      </ng-container>
+      </tbody>
+    </ng-container>
+
+    <ng-template let-item let-idx="index" let-config="config" #defaultRowTpl>
+      <tr [ngClass]="{updating: updatingRows.indexOf(idx)>-1 }">
+
+        <td *ngFor="let header of config.fields;" [class]="'type-'+header.type">
+          <ng-content select=""></ng-content>
+          <ng-container *ngIf="cellTemplateRefs[header.key]">
+            <ng-container *ngTemplateOutlet="cellTemplateRefs[header.key];context:{$implicit: item}"></ng-container>
+          </ng-container>
+          <ng-container *ngIf="!cellTemplateRefs[header.key]" [ngSwitch]="header.type">
+
+            <ng-container *ngSwitchCase="'dateIST'">
+              <div [ngClass]="'status-'+item[header.key]">{{item[header.key] |date:'d MMM yyyy':'530'}}</div>
+              <small [ngClass]="'status-'+item[header.key]">{{item[header.key] |date:'hh:mm:s a':'530'}}</small>
+            </ng-container>
+            <ng-container *ngSwitchCase="'amount'">
+              {{item[header.key] |currency:'INR'}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'date'">
+              {{item[header.key] | date: (header.dateFormat ? header.dateFormat : 'medium')}}
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'boolean'">
+              <span [ngClass]="'bool-'+ item[header.key] ">{{item[header.key] ? 'YES' : 'NO'}}</span>
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'sort'">
+              <div *ngIf="updatingRows.indexOf(idx)>-1" class="sort-spinner d-flex align-items-center justify-content-center">
+                <i class="fa fa-spinner fa-spin"></i>
+              </div>
+              <input style="min-width: 50px" class="form-control text-center orm-control-sm sorting" type="text" [(ngModel)]="item[header.key]" (focusout)="saveOrder(item,idx)">
+            </ng-container>
+
+            <ng-container *ngSwitchCase="'tpl'">
+              <ng-container [ngTemplateOutlet]="header.template" [ngTemplateOutletContext]="{item: item ,index:idx}"></ng-container>
+            </ng-container>
+
+            <ng-container *ngSwitchDefault>
+              <ng-container *ngIf="header.render">
+                <div [innerHTML]="header.render(t(item,header.key).safeObjectOrEmpty)"></div>
+              </ng-container>
+              <ng-container *ngIf="!header.render"> {{ emptyObject(t(item, header.key).safeObject) ? '' : t(item, header.key).safeObject }}</ng-container>
+            </ng-container>
+          </ng-container>
+        </td>
+        <ng-container *ngIf="config.actions">
+          <td *ngIf="config.actions && checkIfViewRef(config.actions)" class="min">
+            <ng-container [ngTemplateOutlet]="config.actions" [ngTemplateOutletContext]="{item:item,data:data.data}"></ng-container>
+          </td>
+          <ng-container *ngIf="config.actions && !checkIfViewRef(config.actions)">
+
+            <td *ngFor="let a of config.actions">
+              <button type="button" class="btn btn-sm btn-{{a.type}} mr-2" (click)="a.fn(data.data,idx)">{{a.name}}</button>
+            </td>
+
+          </ng-container>
+        </ng-container>
+        <ng-container *ngIf="cellTemplateRefs['actions']">
+          <td>
+            <ng-container *ngTemplateOutlet="cellTemplateRefs['actions'];context:{$implicit: item,index:idx}"></ng-container>
+          </td>
+        </ng-container>
+
+      </tr>
+    </ng-template>
+
+
+  </table>
+
+  <ng-container *ngTemplateOutlet="pagination;context:{data:data,params:params}"></ng-container>
+
+
+</ng-container>
+<lib-no-records *ngIf="!dataLoading && data?.data.length==0" (refreshed)="firstLoad=true;loadData()"></lib-no-records>
+
+<ng-template #pagination let-data="data" let-params="params">
+  <div class="d-flex pt-3 pb-3 just justify-content-between">
+    <p-paginator
+      #paginator
+      (onPageChange)="pageChanged($event)"
+      [rowsPerPageOptions]="[15,30,50,100]"
+      [rows]="params.per_page"
+      [totalRecords]="data.total"
+      [pageLinkSize]="10">
+    </p-paginator>
+    <lib-svg-loader *ngIf="dataLoading"></lib-svg-loader>
+    <div>
+      <button (click)="clearSearch()" *ngIf="haveItems(params?.search)" class="btn btn-outline-secondary"><i class="me-2 fa fa-times"></i>Clear Filters</button>
+      <button (click)="clearSort()" *ngIf="params.sort.key" class="btn  btn-outline-secondary ml-2 "><i class="mr-3 fa fa-times"></i>Clear Sorting</button>
+    </div>
+  </div>
+</ng-template>
+

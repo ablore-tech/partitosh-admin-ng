@@ -1,0 +1,14 @@
+{
+  "/api/*": {
+    "target": "http://par.lol.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  },
+  "/sanctum/*": {
+    "target": "http://par.lol.com",
+    "secure": false,
+    "logLevel": "debug",
+    "changeOrigin": true
+  }
+}

@@ -1,0 +1,41 @@
+$green: #81ca6e;
+$red: #fa556f;
+.status {
+  &-online, &-future {
+    background-color: #ffd993;
+    color: #000000;
+  }
+  &-offline {
+    background-color: #8ad4fc;
+    color: #000000;
+  }
+  &-yes, &-publish, &-approved, &-hotel, &-online, &-ended, &-admin, &-amount, &-paid, &-true, &-started, &-active, &-processed {
+    background-color: $green;
+    color: #ffffff;
+  }
+  &-in-progress, &-progress, &-cab, &-offline, &-percent, &-created, &-student {
+    background-color: #fda15a;
+  }
+  &-no, &-draft, &-reject, &-pending, &-false, &-cancelled {
+    background-color: $red;
+    color: #ffffff;
+  }
+  &-teacher, &-paused, &-partial {
+    background-color: #b401e5;
+  }
+}
+
+.tbl-status {
+  min-width: 80px;
+  display: inline-block;
+  text-align: center;
+  padding: 4px 8px;
+  border-radius: 2px;
+  font-size: 12px;
+  letter-spacing: 0px;
+  font-weight: bold;
+  text-transform: uppercase;
+  color: #ffffff;
+}
+
+
