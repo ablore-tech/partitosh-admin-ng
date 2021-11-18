@@ -54,6 +54,7 @@ export class BlogComponent extends BaseComponent implements OnInit {
       type: new FormControl(),
       meta_audio_or_pdf: new FormControl(),
       categories: new FormControl(),
+      time_tag: new FormControl(),
     });
     this.loadData();
   }
