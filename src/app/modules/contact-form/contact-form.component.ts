@@ -21,10 +21,9 @@ export class ContactFormComponent implements OnInit {
   public config: ILaravelDataTableConfig = {
     fields: [
       {key: 'id', name: 'ID', width: 'min'},
-      {key: 'first_name', name: 'First Name'},
-      {key: 'last_name', name: 'Last Name'},
-      {key: 'attachment', name: 'Attachment'},
-      {key: 'email', name: 'Email'},
+      {key: 'name', name: 'First Name'},
+      {key: 'subject', name: 'Last Name'},
+      {key: 'email', name: 'Attachment'},
       {key: 'phone', name: 'Phone'},
       {key: 'message', name: 'Message'},
       {key: 'created_at', name: 'Created', type: 'dateIST'},
@@ -61,6 +60,7 @@ export class ContactFormComponent implements OnInit {
     this.api.post('contact-form/destroy', {id: item.id})
       .pipe(finalize(() => this.loader.hide()))
       .subscribe((res: any) => {
+        this.table.loadData();
       });
   }
 
