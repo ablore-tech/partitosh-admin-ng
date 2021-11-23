@@ -27,6 +27,10 @@
           <label for="title">Title</label>
         </div>
         <div class="form-floating mb-3">
+          <input type="text" formControlName="sub_title" class="form-control" id="sub_title" placeholder="name@example.com">
+          <label for="sub_title">Sub title</label>
+        </div>
+        <div class="form-floating mb-3">
           <input type="text" formControlName="slug" class="form-control" id="slug" placeholder="name@example.com">
           <label for="slug">Slug</label>
         </div>
@@ -69,6 +73,10 @@
         <div formFieldContainer>
           <div class="section">Blog Banner Image</div>
           <app-image-upload formControlName="image"></app-image-upload>
+        </div>
+        <div formFieldContainer>
+          <div class="section">Full Banner Image</div>
+          <app-image-upload formControlName="full_image"></app-image-upload>
         </div>
 
         <div class="section mt-3">Seo</div>

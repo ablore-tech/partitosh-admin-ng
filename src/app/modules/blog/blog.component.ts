@@ -45,9 +45,11 @@ export class BlogComponent extends BaseComponent implements OnInit {
     this.form = new FormGroup({
       id: new FormControl(),
       title: new FormControl('', [Validators.required]),
+      sub_title: new FormControl(''),
       slug: new FormControl(),
       content: new FormControl(),
       image: new FormControl(null, [Validators.required]),
+      full_image: new FormControl(null, [Validators.required]),
       status: new FormControl('publish', [Validators.required]),
       seo: new FormControl(),
       tags: new FormControl(),
