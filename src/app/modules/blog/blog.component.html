@@ -38,6 +38,16 @@
           <label for="" class="form-label">Tags ( comma separated)</label>
           <p-chips styleClass="w-100" [allowDuplicate]="false" separator="," formControlName="tags"></p-chips>
         </div>
+
+        <div class="form-floating mb-3">
+          <input type="text" formControlName="quote" class="form-control" placeholder="name@example.com">
+          <label for="slug">Quote</label>
+        </div>
+        <div class="form-group mb-3">
+          <label for="slug">Quote Description</label>
+          <app-editor formControlName="quote_description"></app-editor>
+        </div>
+
         <div class="form-group my-3">
           <label for="" class="form-label">Post Type</label>
           <p-selectButton formControlName="type" [options]="postType"></p-selectButton>

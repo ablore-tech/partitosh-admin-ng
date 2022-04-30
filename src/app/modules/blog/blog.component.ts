@@ -1,13 +1,13 @@
-import {Component, OnInit, ViewChild} from '@angular/core';
-import {ILaravelDataTableConfig} from '../../../../projects/xs-laravel-data-table/src/interfaces/ILaravelDataTableConfig';
-import {FormControl, FormGroup, Validators} from '@angular/forms';
-import {finalize} from 'rxjs/operators';
-import {ApiService} from '../../services/api.service';
-import {XsLaravelDataTableComponent} from '../../../../projects/xs-laravel-data-table/src/lib/xs-laravel-data-table.component';
-import {NgxSpinnerService} from 'ngx-spinner';
-import {environment} from "../../../environments/environment";
-import {LocalStorage} from "ngx-webstorage";
-import {BaseComponent} from "../../base-component";
+import { Component, OnInit, ViewChild } from '@angular/core';
+import { ILaravelDataTableConfig } from '../../../../projects/xs-laravel-data-table/src/interfaces/ILaravelDataTableConfig';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { finalize } from 'rxjs/operators';
+import { ApiService } from '../../services/api.service';
+import { XsLaravelDataTableComponent } from '../../../../projects/xs-laravel-data-table/src/lib/xs-laravel-data-table.component';
+import { NgxSpinnerService } from 'ngx-spinner';
+import { environment } from "../../../environments/environment";
+import { LocalStorage } from "ngx-webstorage";
+import { BaseComponent } from "../../base-component";
 
 @Component({
   selector: 'app-blog',
@@ -21,22 +21,22 @@ export class BlogComponent extends BaseComponent implements OnInit {
   public form: FormGroup;
   public loading = false;
   public statusList = [
-    {label: 'Publish', value: 'publish'},
-    {label: 'Draft', value: 'draft'},
-    {label: 'Pending', value: 'pending'},
+    { label: 'Publish', value: 'publish' },
+    { label: 'Draft', value: 'draft' },
+    { label: 'Pending', value: 'pending' },
   ];
   public postType = [
-    {label: 'Post', value: 'Post'},
-    {label: 'PDF', value: 'pdf'},
-    {label: 'Podcast', value: 'podcast'},
+    { label: 'Post', value: 'Post' },
+    { label: 'PDF', value: 'pdf' },
+    { label: 'Podcast', value: 'podcast' },
   ];
-  public dependOn = {categories: [], cities: []}
+  public dependOn = { categories: [], cities: [] }
   public config: ILaravelDataTableConfig = {
     fields: [
-      {key: 'id', name: 'ID', width: 'min'},
-      {key: 'title', name: 'Title',},
-      {key: 'status', name: 'Status', width: 'min'},
-      {key: 'created_at', name: 'Created', type: 'dateIST', width: 'min'},
+      { key: 'id', name: 'ID', width: 'min' },
+      { key: 'title', name: 'Title', },
+      { key: 'status', name: 'Status', width: 'min' },
+      { key: 'created_at', name: 'Created', type: 'dateIST', width: 'min' },
     ]
   };
 
@@ -55,6 +55,8 @@ export class BlogComponent extends BaseComponent implements OnInit {
       meta_audio_or_pdf: new FormControl(),
       categories: new FormControl(),
       time_tag: new FormControl(),
+      quote: new FormControl(),
+      quote_description: new FormControl(),
     });
     this.loadData();
   }
@@ -77,7 +79,7 @@ export class BlogComponent extends BaseComponent implements OnInit {
       return category.id;
     });
     this.form.patchValue(item);
-    this.form.patchValue({tags, categories});
+    this.form.patchValue({ tags, categories });
     this.displayAddNewModal = true;
   }
 
@@ -97,7 +99,7 @@ export class BlogComponent extends BaseComponent implements OnInit {
 
   delete(item) {
     this.loader.show();
-    this.api.post('blog/destroy', {id: item.id})
+    this.api.post('blog/destroy', { id: item.id })
       .pipe(finalize(() => this.loader.hide()))
       .subscribe((res: any) => {
         this.table.loadData();
@@ -105,7 +107,7 @@ export class BlogComponent extends BaseComponent implements OnInit {
   }
 
   formDialogClosed() {
-    this.form.reset({status: 'publish', tags: [], 'categories': []});
+    this.form.reset({ status: 'publish', tags: [], 'categories': [] });
     console.log('closed');
   }
 

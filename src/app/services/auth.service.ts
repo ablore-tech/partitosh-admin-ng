@@ -1,9 +1,10 @@
-import {Injectable} from '@angular/core';
-import {LocalStorage} from 'ngx-webstorage';
-import {IUser} from "../interfaces/ILoginResponse";
-import {GlobalLoaderService} from "./global-loader.service";
-import {ApiService} from "./api.service";
-import {finalize} from "rxjs/operators";
+import { Injectable } from '@angular/core';
+import { LocalStorage } from 'ngx-webstorage';
+import { IUser } from "../interfaces/ILoginResponse";
+import { GlobalLoaderService } from "./global-loader.service";
+import { ApiService } from "./api.service";
+import { finalize } from "rxjs/operators";
+import { of } from "rxjs";
 
 @Injectable({
   providedIn: 'root'
@@ -28,7 +29,6 @@ export class AuthService {
   logout() {
     this.loader.show();
     this.user = null;
-    return this.api.post('logout', {})
-      .pipe(finalize(() => this.loader.hide()))
+    return of(true);
   }
 }
