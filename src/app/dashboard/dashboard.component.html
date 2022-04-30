@@ -9,7 +9,7 @@
 
     <div class="logged-in-user">
       <div class="py bg-white">
-        <img src="assets/logo.png" class="img-fluid" alt="" style="width: 60%;margin: auto;">
+        <img src="assets/logo.png" class="img-fluid" alt="" style="width: 60%;margin: auto;display: block;">
       </div>
       <div class="p-4 d-flex " style="background-color: #ef6510;">
         <div *ngIf="auth.user.profile_image" class="me-2">
@@ -31,11 +31,12 @@
       <li><a style="cursor: pointer;" (click)="logout()"><i class="pi pi-power-off me-2"></i>Logout</a></li>
     </ul>
 
-    <div class="p-4">
-      call@946738344 or visit us at www.ablore.com
-    </div>
+
   </div>
   <div class="content flex-grow-1 h-100 p-4">
     <router-outlet></router-outlet>
+    <div class="p-4  text-right  position-fixed" style="bottom: 0; width: 100% ;left: 0; padding-left: 300px;text-align: right">
+      call@946738344 or visit us at www.ablore.com
+    </div>
   </div>
 </div>
